@@ -8,7 +8,7 @@ VALUES ('Струны для электрогитары', 'in stock'),
        ('Батарейка 9 вольт', 'in stock'),
        ('Барабанные палочки', 'in stock') ON CONFLICT DO NOTHING;
 
-INSERT INTO Shop (shop_status)
+INSERT INTO Shop (shop_state)
 VALUES ('opened'),
        ('opened'),
        ('opened'),
