@@ -81,9 +81,7 @@ CREATE TABLE IF NOT EXISTS Event_Time
 (
     id SERIAL PRIMARY KEY,
     start TIME WITHOUT TIME ZONE,
-    finish TIME WITHOUT TIME ZONE,
-    start_date date,
-    finish_date date
+    finish TIME WITHOUT TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS Event
