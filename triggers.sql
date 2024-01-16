@@ -124,7 +124,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER sale_trigger
+CREATE OR REPLACE TRIGGER sale_equpipment_trigger
     AFTER UPDATE ON Event
     FOR EACH ROW
 EXECUTE FUNCTION sale_equipment();
@@ -168,7 +168,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER pdate_place_status_on_master_update_trigger
+CREATE TRIGGER update_place_status_on_master_update_trigger
 AFTER UPDATE ON Master
 FOR EACH ROW
 EXECUTE FUNCTION update_place_status_on_master_update();
