@@ -10,14 +10,14 @@ CREATE TABLE IF NOT EXISTS Product
 (
     id SERIAL PRIMARY KEY,
     product_name  VARCHAR(255) NOT NULL,
-    product_status ENUM ('in stock', 'out of stock'),
+    product_state product_status,
     product_price INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS Shop
 (
     id SERIAL PRIMARY KEY,
-    shop_status ENUM ('opened', 'closed')
+    shop_state shop_status
 );
 
 CREATE TABLE IF NOT EXISTS Product_Range
@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS Human
     id SERIAL PRIMARY KEY,
     human_name VARCHAR(100),
     human_age INTEGER,
-    sex ENUM ('male', 'female'),
+    sex_type sex,
     salary INTEGER,
-    job_state ENUM ('employed', 'unemployed')
+    job_status job_state
 );
 
 CREATE TABLE IF NOT EXISTS Role_Duty
@@ -68,21 +68,22 @@ CREATE TABLE IF NOT EXISTS Owner
 (
     id SERIAL PRIMARY KEY,
     human_id INTEGER REFERENCES Human (id) ON DELETE CASCADE NOT NULL,
-    cruelty ENUM ('happy', 'modest', 'angry'),
+    cruelty_type cruelty,
     role_duty_id INTEGER REFERENCES Role_Duty (id) ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Relax_Room
 (
     id SERIAL PRIMARY KEY,
-    room_state ENUM ('opened', 'closed')
+    room_status room_state
 );
 
 CREATE TABLE IF NOT EXISTS Room
 (
     id SERIAL PRIMARY KEY,
     place_id INTEGER REFERENCES Place (id) ON DELETE CASCADE NOT NULL,
-    human_id INTEGER REFERENCES Human (id) ON DELETE CASCADE NOT NULL
+    human_id INTEGER REFERENCES Human (id) ON DELETE CASCADE NOT NULL,
+    room_status room_state
 );
 
 CREATE TABLE IF NOT EXISTS Event_Time
@@ -131,7 +132,7 @@ CREATE TABLE IF NOT EXISTS Place
     owner_id INTEGER REFERENCES Owner (id) ON DELETE CASCADE NOT NULL,
     admin_id INTEGER REFERENCES Admin (id) ON DELETE CASCADE NOT NULL,
     master_id INTEGER REFERENCES Master (id) ON DELETE CASCADE NOT NULL,
-    place_status ENUM ('opened', 'closed'),
+    place_state place_status,
     relax_room_id INTEGER REFERENCES Relax_room (id) ON DELETE CASCADE NOT NULL,
     shop_id INTEGER REFERENCES Shop (id) ON DELETE CASCADE NOT NULL
 );
