@@ -2,8 +2,7 @@ CREATE TABLE IF NOT EXISTS Product
 (
     id SERIAL PRIMARY KEY,
     product_name  VARCHAR(255) NOT NULL,
-    product_status ENUM ('in stock', 'out of stock'),
-    cost int
+    product_status ENUM ('in stock', 'out of stock')
 );
 
 CREATE TABLE IF NOT EXISTS Shop
