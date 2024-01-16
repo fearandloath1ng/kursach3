@@ -116,29 +116,29 @@ VALUES ('Fire, Hire, Ban, Open event, Close event, Open place, Close place'),
        ('Fix, Snitch'),
        ('Buy, Rehearse') ON CONFLICT DO NOTHING;
 
-INSERT INTO Admin (human_id, sold_count, role_duty_id)
-VALUES (7, 50, 2),
-       (8, 87, 2),
-       (11, 91, 2),
-       (12, 54, 2),
-       (13, 76, 2),
-       (14, 63, 2),
-       (15, 53, 2),
-       (31, 50, 2),
-       (32, 81, 2),
-       (33, 77, 2) ON CONFLICT DO NOTHING;
+INSERT INTO Admin (human_id, sold_count, role_duty_id, state_work)
+VALUES (7, 50, 2, TRUE),
+       (8, 87, 2, TRUE),
+       (11, 91, 2, TRUE),
+       (12, 54, 2, TRUE),
+       (13, 76, 2, TRUE),
+       (14, 63, 2, TRUE),
+       (15, 53, 2, TRUE),
+       (31, 50, 2, TRUE),
+       (32, 81, 2, TRUE),
+       (33, 77, 2, TRUE) ON CONFLICT DO NOTHING;
 
-INSERT INTO Master (human_id, fixed, not_fixed, role_duty_id)
-VALUES (10, 56, 2, 3),
-       (16, 37, 3, 3),
-       (17, 59, 5, 3),
-       (20, 88, 0, 3),
-       (27, 67, 1, 3),
-       (29, 54, 1, 3),
-       (30, 70, 3, 3),
-       (34, 73, 2, 3),
-       (35, 50, 1, 3),
-       (40, 80, 1, 3) ON CONFLICT DO NOTHING;
+INSERT INTO Master (human_id, fixed, not_fixed, role_duty_id, state_work)
+VALUES (10, 56, 2, 3, TRUE),
+       (16, 37, 3, 3, TRUE),
+       (17, 59, 5, 3, TRUE),
+       (20, 88, 0, 3, TRUE),
+       (27, 67, 1, 3, TRUE),
+       (29, 54, 1, 3, TRUE),
+       (30, 70, 3, 3, TRUE),
+       (34, 73, 2, 3, TRUE),
+       (35, 50, 1, 3, TRUE),
+       (40, 80, 1, 3, TRUE) ON CONFLICT DO NOTHING;
 
 INSERT INTO Owner (human_id, cruelty, role_duty_id)
 VALUES (1, 'happy', 1) ON CONFLICT DO NOTHING;
