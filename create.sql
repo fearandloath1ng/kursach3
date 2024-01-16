@@ -1,3 +1,11 @@
+CREATE TYPE product_status AS ENUM ('in stock', 'out of stock');
+CREATE TYPE shop_status as ENUM('opened', 'closed');
+CREATE TYPE sex as ENUM('male', 'female');
+CREATE TYPE job_state as ENUM('employed', 'unemployed');
+CREATE TYPE cruelty as ENUM('happy', 'modest', 'angry');
+CREATE TYPE room_state as ENUM('opened', 'closed');
+CREATE TYPE place_status as ENUM('opened', 'closed');
+
 CREATE TABLE IF NOT EXISTS Product
 (
     id SERIAL PRIMARY KEY,
