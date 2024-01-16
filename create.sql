@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS Product
 (
     id SERIAL PRIMARY KEY,
     product_name  VARCHAR(255) NOT NULL,
-    product_status ENUM ('in stock', 'out of stock')
+    product_status ENUM ('in stock', 'out of stock'),
+    cost int
 );
 
 CREATE TABLE IF NOT EXISTS Shop
@@ -103,7 +104,8 @@ CREATE TABLE IF NOT EXISTS Equipment
 (
     id SERIAL PRIMARY KEY,
     address_id INTEGER REFERENCES Address (id) ON DELETE CASCADE NOT NULL,
-    equipment_name VARCHAR(255)
+    equipment_name VARCHAR(255),
+    cost int
 );
 
 CREATE TABLE IF NOT EXISTS Buyer
