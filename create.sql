@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Product
 CREATE TABLE IF NOT EXISTS Shop
 (
     id SERIAL PRIMARY KEY,
-    shop_state shop_status
+    shop_status ENUM ('opened', 'closed')
 );
 
 CREATE TABLE IF NOT EXISTS Product_Range
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS Owner
 CREATE TABLE IF NOT EXISTS Relax_Room
 (
     id SERIAL PRIMARY KEY,
-    room_status room_state
+    room_state ENUM ('opened', 'closed')
 );
 
 CREATE TABLE IF NOT EXISTS Room
@@ -90,7 +90,9 @@ CREATE TABLE IF NOT EXISTS Event_Time
 (
     id SERIAL PRIMARY KEY,
     start TIME WITHOUT TIME ZONE,
-    finish TIME WITHOUT TIME ZONE
+    finish TIME WITHOUT TIME ZONE,
+    start_date date,
+    finish_date date
 );
 
 CREATE TABLE IF NOT EXISTS Event
@@ -99,12 +101,6 @@ CREATE TABLE IF NOT EXISTS Event
     event_time_id INTEGER REFERENCES Event_time (id) ON DELETE CASCADE NOT NULL
     event_name VARCHAR(255),
     event_status VARCHAR(20)
-);
-
-CREATE TABLE IF NOT EXISTS Address
-(
-    id SERIAL PRIMARY KEY,
-    address_name VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Equipment
