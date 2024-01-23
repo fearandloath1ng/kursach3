@@ -1,3 +1,11 @@
+CREATE TYPE product_status AS ENUM('in stock', 'out of stock');
+CREATE TYPE shop_status as ENUM('opened', 'closed');
+CREATE TYPE sex as ENUM('male', 'female');
+CREATE TYPE job_state as ENUM('employed', 'unemployed');
+CREATE TYPE cruelty as ENUM('happy', 'modest', 'angry');
+CREATE TYPE room_state as ENUM('opened', 'closed');
+CREATE TYPE place_status as ENUM('opened', 'closed');
+
 CREATE TABLE IF NOT EXISTS Product
 (
     id SERIAL PRIMARY KEY,
@@ -9,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Product
 CREATE TABLE IF NOT EXISTS Shop
 (
     id SERIAL PRIMARY KEY,
-    shop_status ENUM ('opened', 'closed')
+    shop_state shop_status
 );
 
 CREATE TABLE IF NOT EXISTS Product_Range
@@ -67,7 +75,7 @@ CREATE TABLE IF NOT EXISTS Owner
 CREATE TABLE IF NOT EXISTS Relax_Room
 (
     id SERIAL PRIMARY KEY,
-    room_state ENUM ('opened', 'closed')
+    room_status room_state
 );
 
 CREATE TABLE IF NOT EXISTS Room
@@ -82,9 +90,7 @@ CREATE TABLE IF NOT EXISTS Event_Time
 (
     id SERIAL PRIMARY KEY,
     start TIME WITHOUT TIME ZONE,
-    finish TIME WITHOUT TIME ZONE,
-    start_date date,
-    finish_date date
+    finish TIME WITHOUT TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS Event
@@ -93,6 +99,12 @@ CREATE TABLE IF NOT EXISTS Event
     event_time_id INTEGER REFERENCES Event_time (id) ON DELETE CASCADE NOT NULL
     event_name VARCHAR(255),
     event_status VARCHAR(20)
+);
+
+CREATE TABLE IF NOT EXISTS Address
+(
+    id SERIAL PRIMARY KEY,
+    address_name VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Equipment
