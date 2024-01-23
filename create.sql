@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS Owner
 CREATE TABLE IF NOT EXISTS Relax_Room
 (
     id SERIAL PRIMARY KEY,
-    room_state ENUM ('opened', 'closed')
+    room_status room_state
 );
 
 CREATE TABLE IF NOT EXISTS Room
