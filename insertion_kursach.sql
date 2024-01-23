@@ -1,4 +1,4 @@
-INSERT INTO Product (product_name, product_status) 
+INSERT INTO Product (product_name, product_state) 
 VALUES ('Струны для электрогитары', 'in stock'),
        ('Струны для бас гитары', 'in stock'),
        ('Струны для акустической гитары', 'out of stock'),
@@ -8,7 +8,7 @@ VALUES ('Струны для электрогитары', 'in stock'),
        ('Батарейка 9 вольт', 'in stock'),
        ('Барабанные палочки', 'in stock') ON CONFLICT DO NOTHING;
 
-INSERT INTO Shop (shop_status)
+INSERT INTO Shop (shop_state)
 VALUES ('opened'),
        ('opened'),
        ('opened'),
@@ -52,7 +52,7 @@ VALUES (1, 1),
        (10, 3),
        (10, 5) ON CONFLICT DO NOTHING;
 
-INSERT INTO Human (human_name, human_age, sex, salary, job_state)
+INSERT INTO Human (human_name, human_age, sex_type, salary, job_state)
 VALUES ('Daniel Binov', 20, 'male', 1000000, 'employed'),
        ('Ruslan Abulfatov', 20, 'male', 1000000, 'employed'),
        ('Irina Kapustova', 24, 'female', 150000, 'employed'),
@@ -140,7 +140,7 @@ VALUES (10, 56, 2, 3, TRUE),
        (35, 50, 1, 3, TRUE),
        (40, 80, 1, 3, TRUE) ON CONFLICT DO NOTHING;
 
-INSERT INTO Owner (human_id, cruelty, role_duty_id)
+INSERT INTO Owner (human_id, cruelty_type, role_duty_id)
 VALUES (1, 'happy', 1) ON CONFLICT DO NOTHING;
 
 INSERT INTO Relax_Room (room_state)
@@ -177,12 +177,12 @@ VALUES (1, 37),
        (10, 28),
        (10, 15) ON CONFLICT DO NOTHING;
 
-INSERT INTO Event_Time (start, finish, start_date, finish_date)
-VALUES  ('12:00', '15:30', '2024-01-08', '2024-01-08'),  
-        ('09:00', '12:45', '2024-01-09', '2024-01-09'),
-        ('18:30', '21:00', '2024-01-10', '2024-01-10');
-        ('15:00','16:00','2024-05-04','2024-05-05'),
-        ('10:00','11:15','2024-07-09','2024-07-10') ON CONFLICT DO NOTHING;
+INSERT INTO Event_Time (start, finish)
+VALUES  ('12:00', '15:30'),  
+        ('09:00', '12:45'),
+        ('18:30', '21:00');
+        ('15:00','16:00'),
+        ('10:00','11:15') ON CONFLICT DO NOTHING;
 
 INSERT INTO Event (event_time_id, event_name, event_status)
 VALUES (1, 'Sale', 'Ongoing'),
@@ -237,7 +237,7 @@ VALUES (1, 'DW drums'),
        (10, 'Kiesel bass'),
        (10, 'Kiesel guitar') ON CONFLICT DO NOTHING;
 
-INSERT INTO Place (address_id, owner_id, admin_id, master_id, place_status, relax_room_id, shop_id)
+INSERT INTO Place (address_id, owner_id, admin_id, master_id, place_state, relax_room_id, shop_id)
 VALUES (1, 1, 1, 1, 'opened', 1, 1),
        (2, 1, 2, 2, 'opened', 2, 2),
        (3, 1, 3, 3, 'opened', 3, 3),

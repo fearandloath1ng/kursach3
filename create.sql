@@ -1,11 +1,3 @@
-CREATE TYPE product_status AS ENUM('in stock', 'out of stock');
-CREATE TYPE shop_status as ENUM('opened', 'closed');
-CREATE TYPE sex as ENUM('male', 'female');
-CREATE TYPE job_state as ENUM('employed', 'unemployed');
-CREATE TYPE cruelty as ENUM('happy', 'modest', 'angry');
-CREATE TYPE room_state as ENUM('opened', 'closed');
-CREATE TYPE place_status as ENUM('opened', 'closed');
-
 CREATE TABLE IF NOT EXISTS Product
 (
     id SERIAL PRIMARY KEY,
@@ -17,7 +9,16 @@ CREATE TABLE IF NOT EXISTS Product
 CREATE TABLE IF NOT EXISTS Shop
 (
     id SERIAL PRIMARY KEY,
-    shop_state shop_status
+    shop_status ENUM ('opened', 'closed')
+);
+
+CREATE TABLE IF NOT EXISTS Product_Range
+(
+    shop_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    CONSTRAINT shop_id_fk FOREIGN KEY (shop_id) REFERENCES Shop (id) ON DELETE CASCADE,
+    CONSTRAINT product_id_fk FOREIGN KEY (product_id) REFERENCES Product (id) ON DELETE CASCADE,
+    CONSTRAINT shop_product_id PRIMARY KEY (shop_id, product_id)
 );
 
 CREATE TABLE IF NOT EXISTS Human
@@ -66,16 +67,7 @@ CREATE TABLE IF NOT EXISTS Owner
 CREATE TABLE IF NOT EXISTS Relax_Room
 (
     id SERIAL PRIMARY KEY,
-    room_status room_state
-);
-
-CREATE TABLE IF NOT EXISTS Product_Range
-(
-    shop_id INTEGER NOT NULL,
-    product_id INTEGER NOT NULL,
-    CONSTRAINT shop_id_fk FOREIGN KEY (shop_id) REFERENCES Shop (id) ON DELETE CASCADE,
-    CONSTRAINT product_id_fk FOREIGN KEY (product_id) REFERENCES Product (id) ON DELETE CASCADE,
-    CONSTRAINT shop_product_id PRIMARY KEY (shop_id, product_id)
+    room_state ENUM ('opened', 'closed')
 );
 
 CREATE TABLE IF NOT EXISTS Room
@@ -90,13 +82,9 @@ CREATE TABLE IF NOT EXISTS Event_Time
 (
     id SERIAL PRIMARY KEY,
     start TIME WITHOUT TIME ZONE,
-    finish TIME WITHOUT TIME ZONE
-);
-
-CREATE TABLE IF NOT EXISTS Address
-(
-    id SERIAL PRIMARY KEY,
-    address_name VARCHAR(255)
+    finish TIME WITHOUT TIME ZONE,
+    start_date date,
+    finish_date date
 );
 
 CREATE TABLE IF NOT EXISTS Event
