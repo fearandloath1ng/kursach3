@@ -151,22 +151,22 @@ EXECUTE FUNCTION owner_mentality();
 
 
 -- починка оборудования
-CREATE OR REPLACE FUNCTION update_place_status_on_master_update()
+CREATE OR REPLACE FUNCTION update_place_state_on_master_update()
 RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.not_fixed > NEW.fixed THEN
         UPDATE Place
-        SET place_status = 'closed'
+        SET place_state = 'closed'
         WHERE id IN (SELECT id FROM Place WHERE master_id = NEW.id);
     END IF;
     RETURN NULL;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER update_place_status_on_master_update_trigger
+CREATE TRIGGER update_place_state_on_master_update_trigger
 AFTER UPDATE ON Master
 FOR EACH ROW
-EXECUTE FUNCTION update_place_status_on_master_update();
+EXECUTE FUNCTION update_place_state_on_master_update();
 
 
 
@@ -175,17 +175,17 @@ RETURNS VOID AS $$
 DECLARE
     current_state VARCHAR(255); 
 BEGIN
-    SELECT place_status INTO current_state
+    SELECT place_state INTO current_state
     FROM Place
     WHERE id = place_id;
 
     IF current_state = 'closed' THEN
         UPDATE Place
-        SET place_status = 'opened'
+        SET place_state = 'opened'
         WHERE id = place_id;
     ELSE
         UPDATE Place
-        SET place_status = 'closed'
+        SET place_state = 'closed'
         WHERE id = place_id;
     END IF;
 END;
@@ -198,59 +198,39 @@ RETURNS VOID AS $$
 DECLARE
     current_state VARCHAR(255); 
 BEGIN
-    SELECT shop_status INTO current_state
+    SELECT shop_state INTO current_state
     FROM Shop
     WHERE id = shop_id;
 
     IF current_state = 'closed' THEN
         UPDATE Shop
-        SET shop_status = 'opened'
+        SET shop_state = 'opened'
         WHERE id = shop_id;
     ELSE
         UPDATE Shop
-        SET shop_status = 'closed'
+        SET shop_state = 'closed'
         WHERE id = shop_id;
     END IF;
 END;
 $$ LANGUAGE plpgsql;
 
-
-
-CREATE OR REPLACE FUNCTION open_close_relaxroom(relax_room_id)
-RETURNS VOID AS $$
-BEGIN
-    SELECT room_state INTO current_state
-    FROM Relax_Room
-    WHERE id = relax_room_id;
-
-    IF current_state = 'closed' THEN
-        UPDATE Relax_Room
-        SET room_state = 'opened'
-        WHERE id = relax_room_id;
-    ELSE
-        UPDATE Relax_Room
-        SET room_state = 'closed'
-        WHERE id = relax_room_id;
-    END IF;
-END;
-$$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION open_close_relaxroom(relax_room_id INTEGER)
 RETURNS VOID AS $$
 DECLARE
     current_state VARCHAR(255); 
 BEGIN
-    SELECT room_state INTO current_state
+    SELECT room_status INTO current_state
     FROM Relax_Room
     WHERE id = relax_room_id;
 
     IF current_state = 'closed' THEN
         UPDATE Relax_Room
-        SET room_state = 'opened'
+        SET room_status = 'opened'
         WHERE id = relax_room_id;
     ELSE
         UPDATE Relax_Room
-        SET room_state = 'closed'
+        SET room_status = 'closed'
         WHERE id = relax_room_id;
     END IF;
 END;
