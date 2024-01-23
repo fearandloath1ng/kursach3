@@ -1,58 +1,64 @@
 INSERT INTO Product (product_name, product_state) 
-VALUES ('Струны для электрогитары', 'in stock'),
-       ('Струны для бас гитары', 'in stock'),
-       ('Струны для акустической гитары', 'out of stock'),
-       ('Медиатор тонкий', 'out of stock'),
-       ('Медиатор средний', 'in stock'),
-       ('Медиатор толстый', 'in stock'),
-       ('Батарейка 9 вольт', 'in stock'),
-       ('Барабанные палочки', 'in stock') ON CONFLICT DO NOTHING;
+VALUES 
+('Струны для электрогитары', 'in stock'),
+('Струны для бас гитары', 'in stock'),
+('Струны для акустической гитары', 'out of stock'),
+('Медиатор тонкий', 'out of stock'),
+('Медиатор средний', 'in stock'),
+('Медиатор толстый', 'in stock'),
+('Батарейка 9 вольт', 'in stock'),
+('Барабанные палочки', 'in stock') 
+ON CONFLICT DO NOTHING;
 
 INSERT INTO Shop (shop_state)
-VALUES ('opened'),
-       ('opened'),
-       ('opened'),
-       ('closed'),
-       ('opened'),
-       ('opened'),
-       ('opened'),
-       ('opened'),
-       ('closed'),
-       ('opened') ON CONFLICT DO NOTHING;
+VALUES 
+('opened'),
+('opened'),
+('opened'),
+('closed'),
+('opened'),
+('opened'),
+('opened'),
+('opened'),
+('closed'),
+('opened') 
+ON CONFLICT DO NOTHING;
 
 INSERT INTO Product_Range (shop_id, product_id)
-VALUES (1, 1),
-       (1, 2),
-       (1, 3),
-       (2, 5),
-       (2, 6),
-       (2, 8),
-       (3, 1),
-       (3, 7),
-       (3, 8),
-       (4, 2),
-       (4, 4),
-       (4, 6),
-       (5, 4),
-       (5, 5),
-       (5, 7),
-       (6, 1),
-       (6, 2),
-       (6, 4),
-       (7, 1),
-       (7, 7),
-       (7, 8),
-       (8, 4),
-       (8, 5),
-       (8, 6),
-       (9, 1),
-       (9, 2),
-       (9, 7),
-       (10, 2),
-       (10, 3),
-       (10, 5) ON CONFLICT DO NOTHING;
+VALUES 
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 5),
+(2, 6),
+(2, 8),
+(3, 1),
+(3, 7),
+(3, 8),
+(4, 2),
+(4, 4),
+(4, 6),
+(5, 4),
+(5, 5),
+(5, 7),
+(6, 1),
+(6, 2),
+(6, 4),
+(7, 1),
+(7, 7),
+(7, 8),
+(8, 4),
+(8, 5),
+(8, 6),
+(9, 1),
+(9, 2),
+(9, 7),
+(10, 2),
+(10, 3),
+(10, 5) 
+ON CONFLICT DO NOTHING;
 
-INSERT INTO Human (human_name, human_age, sex_type, salary, job_state)
+INSERT INTO Human (human_name, human_age, sex_type, salary, job_status)
 VALUES ('Daniel Binov', 20, 'male', 1000000, 'employed'),
        ('Ruslan Abulfatov', 20, 'male', 1000000, 'employed'),
        ('Irina Kapustova', 24, 'female', 150000, 'employed'),
@@ -143,7 +149,7 @@ VALUES (10, 56, 2, 3, TRUE),
 INSERT INTO Owner (human_id, cruelty_type, role_duty_id)
 VALUES (1, 'happy', 1) ON CONFLICT DO NOTHING;
 
-INSERT INTO Relax_Room (room_state)
+INSERT INTO Relax_Room (room_status)
 VALUES ('opened'),
        ('opened'),
        ('opened'),
@@ -154,6 +160,19 @@ VALUES ('opened'),
        ('opened'),
        ('opened'),
        ('opened') ON CONFLICT DO NOTHING;
+
+
+INSERT INTO Place (address_id, owner_id, admin_id, master_id, place_state, relax_room_id, shop_id)
+VALUES (1, 1, 1, 1, 'opened', 1, 1),
+       (2, 1, 2, 2, 'opened', 2, 2),
+       (3, 1, 3, 3, 'opened', 3, 3),
+       (4, 1, 4, 4, 'opened', 4, 4),
+       (5, 1, 5, 5, 'opened', 5, 5),
+       (6, 1, 6, 6, 'opened', 6, 6),
+       (7, 1, 7, 7, 'opened', 7, 7),
+       (8, 1, 8, 8, 'opened', 8, 8),
+       (9, 1, 9, 9, 'opened', 9, 9),
+       (10, 1, 10, 10, 'opened', 10, 10) ON CONFLICT DO NOTHING;
 
 INSERT INTO Room (place_id, human_id)
 VALUES (1, 37),
@@ -178,11 +197,13 @@ VALUES (1, 37),
        (10, 15) ON CONFLICT DO NOTHING;
 
 INSERT INTO Event_Time (start, finish)
-VALUES  ('12:00', '15:30'),  
-        ('09:00', '12:45'),
-        ('18:30', '21:00');
-        ('15:00','16:00'),
-        ('10:00','11:15') ON CONFLICT DO NOTHING;
+VALUES  
+('12:00', '15:30'),  
+('09:00', '12:45'),
+('18:30', '21:00'),
+('15:00','16:00'),
+('10:00','11:15') 
+ON CONFLICT DO NOTHING;
 
 INSERT INTO Event (event_time_id, event_name, event_status)
 VALUES (1, 'Sale', 'Ongoing'),
@@ -237,91 +258,13 @@ VALUES (1, 'DW drums'),
        (10, 'Kiesel bass'),
        (10, 'Kiesel guitar') ON CONFLICT DO NOTHING;
 
-INSERT INTO Place (address_id, owner_id, admin_id, master_id, place_state, relax_room_id, shop_id)
-VALUES (1, 1, 1, 1, 'opened', 1, 1),
-       (2, 1, 2, 2, 'opened', 2, 2),
-       (3, 1, 3, 3, 'opened', 3, 3),
-       (4, 1, 4, 4, 'opened', 4, 4),
-       (5, 1, 5, 5, 'opened', 5, 5),
-       (6, 1, 6, 6, 'opened', 6, 6),
-       (7, 1, 7, 7, 'opened', 7, 7),
-       (8, 1, 8, 8, 'opened', 8, 8),
-       (9, 1, 9, 9, 'opened', 9, 9),
-       (10, 1, 10, 10, 'opened', 10, 10) ON CONFLICT DO NOTHING;
+INSERT INTO Buyer (id, human_id, place_id, ban_status, warning_count, role_duty_id)
+VALUES (1, 1, 1, FALSE, 0, 1),
+       (2, 2, 2, FALSE, 0, 1),
+       (3, 3, 3, FALSE, 0, 1),
+       (4, 4, 4, FALSE, 0, 1),
+       (5, 5, 5, FALSE, 0, 1);
 
-INSERT INTO Buyer (human_id, role_duty_id)
-VALUES (2, 4),
-       (3, 4),
-       (4, 4),
-       (5, 4),
-       (6, 4),
-       (9, 4),
-       (18, 4),
-       (19, 4),
-       (21, 4),
-       (22, 4),
-       (23, 4),
-       (24, 4),
-       (25, 4),
-       (26, 4),
-       (28, 4),
-       (36, 4),
-       (37, 4),
-       (38, 4),
-       (39, 4),
-       (41, 4),
-       (42, 4),
-       (43, 4),
-       (44, 4),
-       (45, 4),
-       (46, 4),
-       (47, 4),
-       (48, 4),
-       (49, 4),
-       (50, 4),
-       (51, 4),
-       (52, 4),
-       (53, 4),
-       (54, 4),
-       (55, 4),
-       (56, 4) ON CONFLICT DO NOTHING;
-
-INSERT INTO Buyer (ban_status)
-VALUES (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE),
-       (FALSE) ON CONFLICT DO NOTHING;
 
 INSERT INTO Place_to_Event (place_id, event_id)
 VALUES (1, 1),
@@ -335,34 +278,4 @@ VALUES (1, 1),
        (1, 2),
        (1, 3),
        (2, 4),
-       (2, 5),
-       (2, 6),
-       (3, 7),
-       (3, 8),
-       (3, 9),
-       (4, 10),
-       (4, 11),
-       (4, 12),
-       (5, 13),
-       (5, 14),
-       (5, 15),
-       (6, 16),
-       (6, 17),
-       (6, 18),
-       (6, 19),
-       (7, 20),
-       (7, 21),
-       (7, 22),
-       (7, 23),
-       (8, 24),
-       (8, 25),
-       (8, 26),
-       (8, 27),
-       (9, 28),
-       (9, 29),
-       (9, 30),
-       (9, 31),
-       (10, 32),
-       (10, 33),
-       (10, 34),
-       (10, 35) ON CONFLICT DO NOTHING;
+       (2, 5) ON CONFLICT DO NOTHING;

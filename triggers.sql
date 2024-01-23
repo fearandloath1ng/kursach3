@@ -8,27 +8,20 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION ban_buyer(buyer_id INT)
+CREATE OR REPLACE FUNCTION ban_buyer()
     RETURNS TRIGGER AS $$
 BEGIN
-    DECLARE current_value INT;
-
-    SELECT warning_count INTO current_value
-    FROM Buyer
-    WHERE id = buyer_id;
-
-    IF current_value > 5 THEN
-        UPDATE Buyer
-        SET ban_status = TRUE
-        WHERE id = buyer_id;
+    IF OLD.warning_count > 5 THEN
+        NEW.ban_status := TRUE;
     END IF;
-    RETURN NULL;
+
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER ban_buyer_trigger
-    AFTER UPDATE ON Buyer
-    FOR EACH ROW
+CREATE TRIGGER ban_buyer_trigger
+BEFORE UPDATE ON Buyer
+FOR EACH ROW
 EXECUTE FUNCTION ban_buyer();
 
 
@@ -42,11 +35,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION stop_work_admin(admin_id INT)
+CREATE OR REPLACE FUNCTION stop_work_admin()
     RETURNS TRIGGER AS $$
 BEGIN
-    IF (SELECT state_work FROM Admin WHERE id = admin_id) = FALSE THEN
-        DELETE FROM Admin WHERE id = admin_id;
+    IF NEW.state_work = FALSE THEN
+        DELETE FROM Admin WHERE id = NEW.id;
     END IF;
     RETURN NULL;
 END;
@@ -68,11 +61,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION stop_work_master(master_id INT)
+CREATE OR REPLACE FUNCTION stop_work_master()
     RETURNS TRIGGER AS $$
 BEGIN
-    IF (SELECT state_work FROM Master WHERE id = master_id) = FALSE THEN
-        DELETE FROM Master WHERE id = master_id;
+    IF NEW.state_work = FALSE THEN
+        DELETE FROM Master WHERE id = NEW.id;
     END IF;
     RETURN NULL;
 END;
@@ -90,10 +83,11 @@ CREATE OR REPLACE FUNCTION change_event()
 BEGIN
     IF (SELECT event_status FROM Event WHERE event_name = 'Sale') = 'finished' THEN
         UPDATE Event
-        SET event_status = 'Ongoing'
+        SET event_status = 'Ongoing';
     ELSE
         UPDATE Event 
-        SET event_status = 'finished'
+        SET event_status = 'finished';
+    END IF;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -101,12 +95,13 @@ CREATE OR REPLACE FUNCTION sale()
     RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.event_status = 'Ongoing' AND OLD.event_status != 'Ongoing' AND NEW.event_name = 'Sale' THEN
-    UPDATE Product
-    SET product_price = product_price * (9/10) 
+        UPDATE Product
+        SET product_price = product_price * (9/10);
     END IF;
     RETURN NULL;
 END;
 $$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE TRIGGER sale_trigger
     AFTER UPDATE ON Event
@@ -117,8 +112,8 @@ CREATE OR REPLACE FUNCTION sale_equipment()
     RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.event_status = 'Ongoing' AND OLD.event_status != 'Ongoing' AND NEW.event_name = 'Sale' THEN
-    UPDATE Equipment
-    SET product_price = product_price * (8/10) 
+        UPDATE Equipment
+        SET product_price = product_price * (8/10);
     END IF;
     RETURN NULL;
 END;
@@ -135,15 +130,15 @@ CREATE OR REPLACE FUNCTION owner_mentality()
     RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.sold_count <= 51 THEN
-    UPDATE Owner
-    SET cruelty = 'angry'
+        UPDATE Owner
+        SET cruelty = 'angry';
     ELSE 
         IF NEW.sold_count > 51 AND NEW.sold_count < 65 THEN
-        UPDATE Owner
-        SET cruelty = 'modest'
+            UPDATE Owner
+            SET cruelty = 'modest';
         ELSE
             UPDATE Owner
-            SET cruelty = 'happy'
+            SET cruelty = 'happy';
         END IF; 
     END IF;
     RETURN NULL;
@@ -175,8 +170,10 @@ EXECUTE FUNCTION update_place_status_on_master_update();
 
 
 
-CREATE OR REPLACE FUNCTION open_close_place(place_id)
+CREATE OR REPLACE FUNCTION open_close_place(place_id INTEGER)
 RETURNS VOID AS $$
+DECLARE
+    current_state VARCHAR(255); 
 BEGIN
     SELECT place_status INTO current_state
     FROM Place
@@ -195,8 +192,11 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION open_close_shop(shop_id)
+
+CREATE OR REPLACE FUNCTION open_close_shop(shop_id INTEGER)
 RETURNS VOID AS $$
+DECLARE
+    current_state VARCHAR(255); 
 BEGIN
     SELECT shop_status INTO current_state
     FROM Shop
@@ -215,8 +215,30 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+
 CREATE OR REPLACE FUNCTION open_close_relaxroom(relax_room_id)
 RETURNS VOID AS $$
+BEGIN
+    SELECT room_state INTO current_state
+    FROM Relax_Room
+    WHERE id = relax_room_id;
+
+    IF current_state = 'closed' THEN
+        UPDATE Relax_Room
+        SET room_state = 'opened'
+        WHERE id = relax_room_id;
+    ELSE
+        UPDATE Relax_Room
+        SET room_state = 'closed'
+        WHERE id = relax_room_id;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION open_close_relaxroom(relax_room_id INTEGER)
+RETURNS VOID AS $$
+DECLARE
+    current_state VARCHAR(255); 
 BEGIN
     SELECT room_state INTO current_state
     FROM Relax_Room
