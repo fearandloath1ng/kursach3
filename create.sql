@@ -114,8 +114,6 @@ CREATE TABLE IF NOT EXISTS Event
     event_name VARCHAR(255),
     event_status VARCHAR(20)
 );
-
--- Assuming Address table is created before referencing in Equipment
 CREATE TABLE IF NOT EXISTS Equipment
 (
     id SERIAL PRIMARY KEY,
