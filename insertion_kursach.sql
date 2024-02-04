@@ -1,13 +1,13 @@
-INSERT INTO Product (product_name, product_state) 
+INSERT INTO Product (product_name, product_state, product_price) 
 VALUES 
-('Струны для электрогитары', 'in stock'),
-('Струны для бас гитары', 'in stock'),
-('Струны для акустической гитары', 'out of stock'),
-('Медиатор тонкий', 'out of stock'),
-('Медиатор средний', 'in stock'),
-('Медиатор толстый', 'in stock'),
-('Батарейка 9 вольт', 'in stock'),
-('Барабанные палочки', 'in stock') 
+('Струны для электрогитары', 'in stock', 1500),
+('Струны для бас гитары', 'in stock', 2000),
+('Струны для акустической гитары', 'out of stock', 600),
+('Медиатор тонкий', 'out of stock', 150),
+('Медиатор средний', 'in stock', 180),
+('Медиатор толстый', 'in stock', 250),
+('Батарейка 9 вольт', 'in stock', 20000),
+('Барабанные палочки', 'in stock', 8000) 
 ON CONFLICT DO NOTHING;
 
 INSERT INTO Shop (shop_state)
@@ -151,13 +151,13 @@ VALUES (1, 'happy', 1) ON CONFLICT DO NOTHING;
 
 INSERT INTO Relax_Room (room_status)
 VALUES ('opened'),
-       ('opened'),
+       ('closed'),
        ('opened'),
        ('opened'),
        ('closed'),
        ('opened'),
        ('opened'),
-       ('opened'),
+       ('closed'),
        ('opened'),
        ('opened') ON CONFLICT DO NOTHING;
 
@@ -226,44 +226,44 @@ VALUES ('Nevsky 122'),
        ('Kazanskaya 5'),
        ('Marata 36') ON CONFLICT DO NOTHING;
 
-INSERT INTO Equipment (address_id, equipment_name)
-VALUES (1, 'DW drums'),
-       (1, 'Fender Jazz bass'),
-       (1, 'Gibson Les Paul guitar'),
-       (2, 'Gretch drums'),
-       (2, 'Gretch bass'),
-       (2, 'Rickenbacker guitar'),
-       (3, 'Tama drums'),
-       (3, 'Ibanez bass'),
-       (3, 'Ibanez guitar'),
-       (4, 'Yamaha drums'),
-       (4, 'Fender bass'),
-       (4, 'Fender Stratocaster guitar'),
-       (5, 'Sonor drums'),
-       (5, 'Gibson bass'),
-       (5, 'Gibson Flying V guitar'),
-       (6, 'Pearl drums'),
-       (6, 'Fender Precision bass'),
-       (6, 'Fender Telecaster guitar'),
-       (7, 'Mapex drums'),
-       (7, 'Warwick bass'),
-       (7, 'ESP guitar'),
-       (8, 'Premier drums'),
-       (8, 'Music Man bass'),
-       (8, 'PRS guitar'),
-       (9, 'Ludwig drums'),
-       (9, 'Yamaha piano'),
-       (9, 'Rickenbacker bass'),
-       (10, 'Tama Starclassic drums'),
-       (10, 'Kiesel bass'),
-       (10, 'Kiesel guitar') ON CONFLICT DO NOTHING;
+INSERT INTO Equipment (address_id, equipment_name, product_price)
+VALUES (1, 'DW drums', 20000),
+       (1, 'Fender Jazz bass', 40000),
+       (1, 'Gibson Les Paul guitar', 10000000),
+       (2, 'Gretch drums', 45000),
+       (2, 'Gretch bass', 76000),
+       (2, 'Rickenbacker guitar', 35000),
+       (3, 'Tama drums', 67000),
+       (3, 'Ibanez bass', 85000),
+       (3, 'Ibanez guitar', 65000),
+       (4, 'Yamaha drums', 55000),
+       (4, 'Fender bass', 53054),
+       (4, 'Fender Stratocaster guitar', 23200),
+       (5, 'Sonor drums', 54300),
+       (5, 'Gibson bass', 70000),
+       (5, 'Gibson Flying V guitar', 48000),
+       (6, 'Pearl drums', 30000),
+       (6, 'Fender Precision bass', 56000),
+       (6, 'Fender Telecaster guitar', 78000),
+       (7, 'Mapex drums', 54444),
+       (7, 'Warwick bass', 35345),
+       (7, 'ESP guitar', 45675),
+       (8, 'Premier drums', 69943),
+       (8, 'Music Man bass', 65444),
+       (8, 'PRS guitar', 76436),
+       (9, 'Ludwig drums', 68534),
+       (9, 'Yamaha piano', 64219),
+       (9, 'Rickenbacker bass', 76305),
+       (10, 'Tama Starclassic drums', 21465),
+       (10, 'Kiesel bass', 68395),
+       (10, 'Kiesel guitar', 65324) ON CONFLICT DO NOTHING;
 
 INSERT INTO Buyer (id, human_id, place_id, ban_status, warning_count, role_duty_id)
-VALUES (1, 1, 1, FALSE, 0, 1),
+VALUES (1, 1, 1, FALSE, 2, 1),
        (2, 2, 2, FALSE, 0, 1),
-       (3, 3, 3, FALSE, 0, 1),
+       (3, 3, 3, FALSE, 1, 1),
        (4, 4, 4, FALSE, 0, 1),
-       (5, 5, 5, FALSE, 0, 1);
+       (5, 5, 5, FALSE, 1, 1);
 
 
 INSERT INTO Place_to_Event (place_id, event_id)
